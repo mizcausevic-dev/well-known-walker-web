@@ -1,0 +1,80 @@
+name: Build and Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build dist/ and FTP-sync to walker.kineticgain.com
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production bundle
+        run: npm run build
+
+      - name: Verify dist/ contains walker
+        run: |
+          test -f dist/index.html || (echo "FAIL: no dist/index.html" && exit 1)
+          grep -q "well-known-walker" dist/index.html || (echo "FAIL: dist/index.html does not mention well-known-walker" && exit 1)
+          echo "OK: dist/ verified"
+          ls -lah dist/
+
+      - name: FTP-Deploy dist/ to /walker/ (first attempt)
+        id: deploy
+        timeout-minutes: 5
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        continue-on-error: true
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          protocol: ftps
+          port: 21
+          timeout: 60000
+          local-dir: ./dist/
+          server-dir: /walker/
+          dangerous-clean-slate: false
+          log-level: standard
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.DS_Store
+
+      - name: Retry FTP-Deploy if first attempt failed
+        if: steps.deploy.outcome == 'failure'
+        timeout-minutes: 5
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          protocol: ftps
+          port: 21
+          timeout: 90000
+          local-dir: ./dist/
+          server-dir: /walker/
+          dangerous-clean-slate: false
+          log-level: verbose
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.DS_Store
