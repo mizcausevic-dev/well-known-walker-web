@@ -1,0 +1,34 @@
+# well-known-walker
+
+> Paste any domain, see every Kinetic Gain disclosure it publishes.
+
+Client-side parallel probe of every Kinetic Gain /.well-known/ URL on a target domain. Reports per-spec status: FOUND / not_found / CORS_blocked / parse_error / network_error, plus a procurement-grade summary (entity identity, claim count, policy scope, incident count, audit mode). No backend; all fetches run in your browser.
+
+## Identity
+
+- **Subdomain**: [walker.kineticgain.com](https://walker.kineticgain.com/)
+- **Spec repo**: [github.com/mizcausevic-dev/well-known-walker-web](https://github.com/mizcausevic-dev/well-known-walker-web)
+- **Buyer audience**: Procurement / Risk reviewers · CISOs auditing vendors
+- **Category**: Tool — disclosure discovery
+- **License**: AGPL-3.0 for spec text; Apache-2.0 for the landing site
+- **Deployment**: GitHub Actions FTP CI/CD on push to main
+
+## Pages
+
+- [/](https://walker.kineticgain.com/): well-known-walker — Paste any domain, see every Kinetic Gain disclosure it publishes.
+
+## Part of the Kinetic Gain Protocol Suite
+
+A family of **10 open JSON specifications** for the answer-engine and agent era — five core (AEO, Prompt Provenance, Agent Cards, AI Evidence Format, MCP Tool Cards), a three-spec EdTech trio (Tutor Cards / Student AI Disclosure / Classroom AI AUP), a HealthTech extension (Clinical AI Disclosure), and a cross-cutting Incident Card. **Two regulated verticals covered.**
+
+- **Front door**: [suite.kineticgain.com](https://suite.kineticgain.com/)
+- **Quickstart hub**: [docs.kineticgain.com](https://docs.kineticgain.com/)
+- **Unified MCP server** (34 tools, 8 specs, v0.4.0): [github.com/mizcausevic-dev/mcp-kinetic-gain](https://github.com/mizcausevic-dev/mcp-kinetic-gain)
+- **Unified visualizer** (8 renderers): [github.com/mizcausevic-dev/kinetic-gain-visualizer](https://github.com/mizcausevic-dev/kinetic-gain-visualizer)
+- **Meta-repo**: [github.com/mizcausevic-dev/kinetic-gain-protocol-suite](https://github.com/mizcausevic-dev/kinetic-gain-protocol-suite)
+
+## Author
+
+- **Miz Causevic** · Director / Principal Platform Engineering · Boston, MA
+- [github.com/mizcausevic-dev](https://github.com/mizcausevic-dev) · [linkedin.com/in/mirzacausevic](https://www.linkedin.com/in/mirzacausevic/) · [kineticgain.com](https://kineticgain.com/) · [medium.com/@mizcausevic](https://medium.com/@mizcausevic/)
+- ~30 years across IBM, CyberArk, Alteryx, Digital.ai, Gryphon.ai
